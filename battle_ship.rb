@@ -1,6 +1,6 @@
 
 class Array2
-  #-- this class allows using arrays like a[row, col] to set and get
+  #-- this class allows using arrays like 2 dimensional arrays - a[row, col] to set and get.
   def initialize
     @store = [[]]
   end
