@@ -47,7 +47,7 @@ end
   #-- destroyer positions
   destroyer_placed = false
   while destroyer_placed == false
-    if rand(2) == 0 #row
+    if rand(2) == 0 #-- row or column
       row = rand(5)
       col = rand(4)
       col.upto(col+1).each do | y |
@@ -63,7 +63,7 @@ end
           eval("#{letter}")[row, y] = 'd'
         end
       end
-    else #column
+    else #-- column
       row = rand(4)
       col = rand(5)
       row.upto(row+1).each do | x |
@@ -85,7 +85,7 @@ end
 #-- battleship positions
   battleship_placed = false
   while battleship_placed == false
-    if rand(2) == 0 #row
+    if rand(2) == 0 #-- row or column
       row = rand(5)
       col = rand(3)
       col.upto(col+2).each do | y |
@@ -102,7 +102,7 @@ end
         end
       end
 
-    else #column
+    else #-- column
       row = rand(3)
       col = rand(5)
       row.upto(row+2).each do | x |
@@ -149,20 +149,19 @@ while coord != 'q'
     puts ""
     turn = 'computer_selects' if letter == 'a'
     turn = 'player_selects' if letter == 'b'
-    destroyer_status = 'Alive'
-    cruiser_status = 'Alive'
+
+    #-- set ship statuses
+    destroyer_status =  'Alive'
+    cruiser_status =    'Alive'
     battleship_status = 'Alive'
-    if eval(turn).grep('d').size == 2
-      destroyer_status = 'Dead'
-    end
-    if eval(turn).grep('b').size == 3
-      battleship_status = 'Dead'
-    end
-    if eval(turn).grep('c').size == 1
-      cruiser_status = 'Dead'
-    end
+    destroyer_status =   'Dead' if eval(turn).grep('d').size == 2
+    battleship_status = ' Dead' if eval(turn).grep('b').size == 3
+    cruiser_status =     'Dead' if eval(turn).grep('c').size == 1
+
     puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}"
+
   end
+
 
   #-- evaluate game
   if player_selects.grep('b').size == 3 && player_selects.grep('c').size == 1 && player_selects.grep('d').size == 2
@@ -172,6 +171,7 @@ while coord != 'q'
     puts "Game Over - Computer Wins!"
     exit
   end
+
 
   #-- player takes turn
   puts "Select a square such as (3,5) to open fire. Enter q to quit."
