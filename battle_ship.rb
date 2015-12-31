@@ -131,7 +131,6 @@ class Battleship
   end
 
 
-
   def draw_boards
     system "clear"
     ['@a', '@b'].each do  | str |
@@ -161,7 +160,6 @@ class Battleship
       cruiser_status =     'Dead' if eval(turn).grep('c').size == 1
 
       puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}"
-
     end
   end
 
@@ -210,6 +208,7 @@ class Battleship
   end
 end
 
+#-- fire it up
 c = Battleship.new
 c.init_data_struct
 c.place_cruisers
