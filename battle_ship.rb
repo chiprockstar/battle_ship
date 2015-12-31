@@ -1,4 +1,3 @@
-
 class Array2Dimensions
 
   def initialize
@@ -65,10 +64,11 @@ class Battleship
               break
             else
               destroyer_placed = true
-              col.upto(col+1).each do | y |
-                eval("#{letter}")[row, y] = 'd'
-              end
-              break
+            end
+          end
+          if destroyer_placed
+            col.upto(col+1).each do | y |
+              eval("#{letter}")[row, y] = 'd'
             end
           end
         else #-- column
@@ -79,10 +79,11 @@ class Battleship
               break
             else
               destroyer_placed = true
-              row.upto(row+1).each do | x |
-                eval("#{letter}")[x, col] = 'd'
-              end
-              break
+            end
+          end
+          if destroyer_placed
+            row.upto(row+1).each do | x |
+              eval("#{letter}")[x, col] = 'd'
             end
           end
         end
@@ -103,11 +104,12 @@ class Battleship
               break
             else
               battleship_placed = true
-              col.upto(col+2).each do | y |
-                eval("#{letter}")[row, y] = 'b'
-              end
-              break
             end
+          end
+          if battleship_placed
+            col.upto(col+2).each do | y |
+              eval("#{letter}")[row, y] = 'b'
+            end 
           end
         else #-- column
           row = rand(3); col = rand(5)
@@ -117,10 +119,11 @@ class Battleship
               break
             else
               battleship_placed = true
-              row.upto(row+2).each do | x |
-                eval("#{letter}")[x, col] = 'b'
-              end
-              break
+            end
+          end
+          if battleship_placed
+            row.upto(row+2).each do | x |
+              eval("#{letter}")[x, col] = 'b'
             end
           end
         end
