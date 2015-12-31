@@ -1,1 +1,2 @@
-# battle_ship
+# battle ship Game
+play against the computer
