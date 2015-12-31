@@ -136,7 +136,6 @@ class Battleship
   def draw_boards
     system "clear"
     ['@a', '@b'].each do  | str |
-      puts ""
       if str == '@a'
         puts "Willy's Board"
       else
