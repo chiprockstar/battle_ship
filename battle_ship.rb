@@ -46,7 +46,7 @@ class Battleship
 
   def place_cruisers
     ['@a', '@b'].each do | letter |
-    #-- cruiser positions
+      #-- cruiser positions
       eval("#{letter}")[rand(5), rand(5)] = 'c'
     end
   end
@@ -54,7 +54,7 @@ class Battleship
 
   def place_destroyers
     ['@a', '@b'].each do | letter |
-  #-- destroyer positions
+      #-- destroyer positions
       destroyer_placed = false
       while destroyer_placed == false
         if rand(2) == 0 #-- row or column
@@ -96,7 +96,7 @@ class Battleship
 
   def place_battleships
     ['@a', '@b'].each do | letter |
-        #-- battleship positions
+      #-- battleship positions
       battleship_placed = false
       while battleship_placed == false
         if rand(2) == 0 #-- row or column
