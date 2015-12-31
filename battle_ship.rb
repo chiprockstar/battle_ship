@@ -149,6 +149,7 @@ class Battleship
       end
       puts "  +---+---+---+---+---+"
       puts ""
+      
       turn = '@computer_selects' if str == '@a'
       turn = '@player_selects'   if str == '@b'
 
