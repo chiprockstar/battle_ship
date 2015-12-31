@@ -44,22 +44,22 @@ class Battleship
 
 
   def place_cruisers
-    ['@a', '@b'].each do | letter |
+    ['@a', '@b'].each do | str |
       #-- cruiser positions
-      eval("#{letter}")[rand(5), rand(5)] = 'c'
+      eval("#{str}")[rand(5), rand(5)] = 'c'
     end
   end
 
 
   def place_destroyers
-    ['@a', '@b'].each do | letter |
+    ['@a', '@b'].each do | str |
       #-- destroyer positions
       destroyer_placed = false
       while destroyer_placed == false
         if rand(2) == 0 #-- row or column
           row = rand(5); col = rand(4)
           col.upto(col+1).each do | y |
-            if eval("#{letter}")[row, y] != ' '
+            if eval("#{str}")[row, y] != ' '
               destroyer_placed = false
               break
             else
@@ -68,13 +68,13 @@ class Battleship
           end
           if destroyer_placed
             col.upto(col+1).each do | y |
-              eval("#{letter}")[row, y] = 'd'
+              eval("#{str}")[row, y] = 'd'
             end
           end
         else #-- column
           row = rand(4); col = rand(5)
           row.upto(row+1).each do | x |
-            if eval("#{letter}")[x, col] != ' '
+            if eval("#{str}")[x, col] != ' '
               destroyer_placed = false
               break
             else
@@ -83,7 +83,7 @@ class Battleship
           end
           if destroyer_placed
             row.upto(row+1).each do | x |
-              eval("#{letter}")[x, col] = 'd'
+              eval("#{str}")[x, col] = 'd'
             end
           end
         end
@@ -92,14 +92,14 @@ class Battleship
   end
 
   def place_battleships
-    ['@a', '@b'].each do | letter |
+    ['@a', '@b'].each do | str |
       #-- battleship positions
       battleship_placed = false
       while battleship_placed == false
         if rand(2) == 0 #-- row or column
           row = rand(5); col = rand(3)
           col.upto(col+2).each do | y |
-            if eval("#{letter}")[row, y] != ' '
+            if eval("#{str}")[row, y] != ' '
               battleship_placed = false
               break
             else
@@ -108,13 +108,13 @@ class Battleship
           end
           if battleship_placed
             col.upto(col+2).each do | y |
-              eval("#{letter}")[row, y] = 'b'
-            end 
+              eval("#{str}")[row, y] = 'b'
+            end
           end
         else #-- column
           row = rand(3); col = rand(5)
           row.upto(row+2).each do | x |
-            if eval("#{letter}")[x, col] != ' '
+            if eval("#{str}")[x, col] != ' '
               battleship_placed = false
               break
             else
@@ -123,7 +123,7 @@ class Battleship
           end
           if battleship_placed
             row.upto(row+2).each do | x |
-              eval("#{letter}")[x, col] = 'b'
+              eval("#{str}")[x, col] = 'b'
             end
           end
         end
@@ -135,28 +135,28 @@ class Battleship
 
   def draw_boards
     system "clear"
-    ['@a', '@b'].each do  | letter |
+    ['@a', '@b'].each do  | str |
       puts ""
-      if letter == '@a'
+      if str == '@a'
         puts "Willy's Board"
       else
         puts "Computer's Board"
       end
       puts "    1   2   3   4   5"
       puts "  +---+---+---+---+---+"
-      puts "1 | #{eval(letter)[0,0]} | #{eval(letter)[0,1]} | #{eval(letter)[0,2]} | #{eval(letter)[0,3]} | #{eval(letter)[0,4]} |"
+      puts "1 | #{eval(str)[0,0]} | #{eval(str)[0,1]} | #{eval(str)[0,2]} | #{eval(str)[0,3]} | #{eval(str)[0,4]} |"
       puts "  +---+---+---+---+---+"
-      puts "2 | #{eval(letter)[1,0]} | #{eval(letter)[1,1]} | #{eval(letter)[1,2]} | #{eval(letter)[1,3]} | #{eval(letter)[1,4]} |"
+      puts "2 | #{eval(str)[1,0]} | #{eval(str)[1,1]} | #{eval(str)[1,2]} | #{eval(str)[1,3]} | #{eval(str)[1,4]} |"
       puts "  +---+---+---+---+---+"
-      puts "3 | #{eval(letter)[2,0]} | #{eval(letter)[2,1]} | #{eval(letter)[2,2]} | #{eval(letter)[2,3]} | #{eval(letter)[2,4]} |"
+      puts "3 | #{eval(str)[2,0]} | #{eval(str)[2,1]} | #{eval(str)[2,2]} | #{eval(str)[2,3]} | #{eval(str)[2,4]} |"
       puts "  +---+---+---+---+---+"
-      puts "4 | #{eval(letter)[3,0]} | #{eval(letter)[3,1]} | #{eval(letter)[3,2]} | #{eval(letter)[3,3]} | #{eval(letter)[3,4]} |"
+      puts "4 | #{eval(str)[3,0]} | #{eval(str)[3,1]} | #{eval(str)[3,2]} | #{eval(str)[3,3]} | #{eval(str)[3,4]} |"
       puts "  +---+---+---+---+---+"
-      puts "5 | #{eval(letter)[4,0]} | #{eval(letter)[4,1]} | #{eval(letter)[4,2]} | #{eval(letter)[4,3]} | #{eval(letter)[4,4]} |"
+      puts "5 | #{eval(str)[4,0]} | #{eval(str)[4,1]} | #{eval(str)[4,2]} | #{eval(str)[4,3]} | #{eval(str)[4,4]} |"
       puts "  +---+---+---+---+---+"
       puts ""
-      turn = '@computer_selects' if letter == '@a'
-      turn = '@player_selects'   if letter == '@b'
+      turn = '@computer_selects' if str == '@a'
+      turn = '@player_selects'   if str == '@b'
 
       #-- set ship statuses
       destroyer_status =  'Alive'
