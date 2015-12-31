@@ -33,7 +33,7 @@ class Battleship
   end
 
   def init_data_struct
-  #-- initialize board locations to 1 space
+    #-- initialize board locations to 1 space
     0.upto(4).each do | x |
       0.upto(4).each do | y |
         @a[x, y] = ' '
@@ -58,8 +58,7 @@ class Battleship
       destroyer_placed = false
       while destroyer_placed == false
         if rand(2) == 0 #-- row or column
-          row = rand(5)
-          col = rand(4)
+          row = rand(5); col = rand(4)
           col.upto(col+1).each do | y |
             if eval("#{letter}")[row, y] != ' '
               destroyer_placed = false
@@ -74,8 +73,7 @@ class Battleship
             end
           end
         else #-- column
-          row = rand(4)
-          col = rand(5)
+          row = rand(4); col = rand(5)
           row.upto(row+1).each do | x |
             if eval("#{letter}")[x, col] != ' '
               destroyer_placed = false
@@ -100,8 +98,7 @@ class Battleship
       battleship_placed = false
       while battleship_placed == false
         if rand(2) == 0 #-- row or column
-          row = rand(5)
-          col = rand(3)
+          row = rand(5); col = rand(3)
           col.upto(col+2).each do | y |
             if eval("#{letter}")[row, y] != ' '
               battleship_placed = false
@@ -116,8 +113,7 @@ class Battleship
             end
           end
         else #-- column
-          row = rand(3)
-          col = rand(5)
+          row = rand(3); col = rand(5)
           row.upto(row+2).each do | x |
             if eval("#{letter}")[x, col] != ' '
               battleship_placed = false
@@ -172,7 +168,6 @@ class Battleship
       cruiser_status =     'Dead' if eval(turn).grep('c').size == 1
 
       puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}"
-
     end
   end
 
@@ -206,8 +201,7 @@ class Battleship
     #-- computer takes turn
     process = true
     while process
-      row = rand(5)
-      col = rand(5)
+      row = rand(5); col = rand(5)
       if !@computer[row, col].include?("x") && !@computer[row, col].include?("/")
         @computer_selects << "#{@a[row, col]}"
         if @a[row, col] == ' '
@@ -221,8 +215,6 @@ class Battleship
     end
   end
 end
-
-
 
 c = Battleship.new
 c.init_data_struct
