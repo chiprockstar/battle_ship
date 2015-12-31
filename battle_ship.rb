@@ -25,8 +25,6 @@ end
 a = Array2.new
 b = Array2.new
 computer = Array2.new
-computer_destroyer = Array2.new
-computer_battle_ship = Array2.new
 computer_selects = []
 player_selects = []
 
