@@ -46,7 +46,7 @@ class Battleship
   def place_cruisers
     ['@a', '@b'].each do | str |
       #-- cruiser positions
-      eval("#{str}")[rand(5), rand(5)] = 'c'
+      eval(str)[rand(5), rand(5)] = 'c'
     end
   end
 
@@ -59,7 +59,7 @@ class Battleship
         if rand(2) == 0 #-- row or column
           row = rand(5); col = rand(4)
           col.upto(col+1).each do | y |
-            if eval("#{str}")[row, y] != ' '
+            if eval(str)[row, y] != ' '
               destroyer_placed = false
               break
             else
@@ -68,13 +68,13 @@ class Battleship
           end
           if destroyer_placed
             col.upto(col+1).each do | y |
-              eval("#{str}")[row, y] = 'd'
+              eval(str)[row, y] = 'd'
             end
           end
         else #-- column
           row = rand(4); col = rand(5)
           row.upto(row+1).each do | x |
-            if eval("#{str}")[x, col] != ' '
+            if eval(str)[x, col] != ' '
               destroyer_placed = false
               break
             else
@@ -83,7 +83,7 @@ class Battleship
           end
           if destroyer_placed
             row.upto(row+1).each do | x |
-              eval("#{str}")[x, col] = 'd'
+              eval(str)[x, col] = 'd'
             end
           end
         end
@@ -99,7 +99,7 @@ class Battleship
         if rand(2) == 0 #-- row or column
           row = rand(5); col = rand(3)
           col.upto(col+2).each do | y |
-            if eval("#{str}")[row, y] != ' '
+            if eval(str)[row, y] != ' '
               battleship_placed = false
               break
             else
@@ -108,13 +108,13 @@ class Battleship
           end
           if battleship_placed
             col.upto(col+2).each do | y |
-              eval("#{str}")[row, y] = 'b'
+              eval(str)[row, y] = 'b'
             end
           end
         else #-- column
           row = rand(3); col = rand(5)
           row.upto(row+2).each do | x |
-            if eval("#{str}")[x, col] != ' '
+            if eval(str)[x, col] != ' '
               battleship_placed = false
               break
             else
@@ -123,7 +123,7 @@ class Battleship
           end
           if battleship_placed
             row.upto(row+2).each do | x |
-              eval("#{str}")[x, col] = 'b'
+              eval(str)[x, col] = 'b'
             end
           end
         end
@@ -183,7 +183,7 @@ class Battleship
     coord = gets.chomp
     exit if coord == 'q'
     split_value = coord.split(",").map { |x| x.to_i }
-    @player_selects << "#{@b[split_value.last - 1, split_value.first - 1]}"
+    @player_selects << @b[split_value.last - 1, split_value.first - 1]
 
     if @b[split_value.last - 1, split_value.first - 1] == ' '
       @b[split_value.last - 1, split_value.first - 1] = '/'
@@ -198,13 +198,13 @@ class Battleship
     while process
       row = rand(5); col = rand(5)
       if !@computer[row, col].include?("x") && !@computer[row, col].include?("/")
-        @computer_selects << "#{@a[row, col]}"
+        @computer_selects << @a[row, col]
         if @a[row, col] == ' '
           @a[row, col]  = '/'
         elsif @a[row, col].scan(/\w/)
           @a[row, col] = 'x'
         end
-        @computer[row, col] = "#{@a[row, col]}"
+        @computer[row, col] = @a[row, col]
         process = false
       end
     end
