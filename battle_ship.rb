@@ -65,11 +65,10 @@ class Battleship
               break
             else
               destroyer_placed = true
-            end
-          end
-          if destroyer_placed
-            col.upto(col+1).each do | y |
-              eval("#{letter}")[row, y] = 'd'
+              col.upto(col+1).each do | y |
+                eval("#{letter}")[row, y] = 'd'
+              end
+              break
             end
           end
         else #-- column
@@ -80,11 +79,10 @@ class Battleship
               break
             else
               destroyer_placed = true
-            end
-          end
-          if destroyer_placed
-            row.upto(row+1).each do | x |
-              eval("#{letter}")[x, col] = 'd'
+              row.upto(row+1).each do | x |
+                eval("#{letter}")[x, col] = 'd'
+              end
+              break
             end
           end
         end
@@ -105,11 +103,10 @@ class Battleship
               break
             else
               battleship_placed = true
-            end
-          end
-          if battleship_placed
-            col.upto(col+2).each do | y |
-              eval("#{letter}")[row, y] = 'b'
+              col.upto(col+2).each do | y |
+                eval("#{letter}")[row, y] = 'b'
+              end
+              break
             end
           end
         else #-- column
@@ -120,11 +117,10 @@ class Battleship
               break
             else
               battleship_placed = true
-            end
-          end
-          if battleship_placed
-            row.upto(row+2).each do | x |
-              eval("#{letter}")[x, col] = 'b'
+              row.upto(row+2).each do | x |
+                eval("#{letter}")[x, col] = 'b'
+              end
+              break
             end
           end
         end
@@ -159,7 +155,7 @@ class Battleship
       turn = '@computer_selects' if letter == '@a'
       turn = '@player_selects'   if letter == '@b'
 
-      # #-- set ship statuses
+      #-- set ship statuses
       destroyer_status =  'Alive'
       cruiser_status =    'Alive'
       battleship_status = 'Alive'
@@ -168,6 +164,7 @@ class Battleship
       cruiser_status =     'Dead' if eval(turn).grep('c').size == 1
 
       puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}"
+
     end
   end
 
