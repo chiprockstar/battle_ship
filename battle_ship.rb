@@ -140,14 +140,13 @@ class Battleship
 
   def draw_boards
     system "clear"
-
     ['@a', '@b'].each do  | letter |
       puts ""
-        if letter == '@a'
-          puts "Willy's Board"
-        else
-          puts "Computer's Board"
-        end
+      if letter == '@a'
+        puts "Willy's Board"
+      else
+        puts "Computer's Board"
+      end
       puts "    1   2   3   4   5"
       puts "  +---+---+---+---+---+"
       puts "1 | #{eval(letter)[0,0]} | #{eval(letter)[0,1]} | #{eval(letter)[0,2]} | #{eval(letter)[0,3]} | #{eval(letter)[0,4]} |"
@@ -162,7 +161,7 @@ class Battleship
       puts "  +---+---+---+---+---+"
       puts ""
       turn = '@computer_selects' if letter == '@a'
-      turn = '@player_selects' if letter == '@b'
+      turn = '@player_selects'   if letter == '@b'
 
       # #-- set ship statuses
       destroyer_status =  'Alive'
