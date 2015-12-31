@@ -45,29 +45,28 @@ class Battleship
 
   def place_cruisers
     ['@a', '@b'].each do | str |
-      #-- cruiser positions
+      #-- randomize cruiser positions
       eval(str)[rand(5), rand(5)] = 'c'
     end
   end
 
-
   def place_destroyers
     ['@a', '@b'].each do | str |
-      #-- destroyer positions
+      #-- randomize destroyer positions
       destroyer_placed = false
       while destroyer_placed == false
         if rand(2) == 0 #-- row or column
           row = rand(5); col = rand(4)
           col.upto(col+1).each do | y |
             if eval(str)[row, y] != ' '
-              destroyer_placed = false
+              destroyer_placed = false #-- check for row collisions
               break
             else
               destroyer_placed = true
             end
           end
           if destroyer_placed
-            col.upto(col+1).each do | y |
+            col.upto(col+1).each do | y | #-- place destroyer in a row
               eval(str)[row, y] = 'd'
             end
           end
@@ -75,14 +74,14 @@ class Battleship
           row = rand(4); col = rand(5)
           row.upto(row+1).each do | x |
             if eval(str)[x, col] != ' '
-              destroyer_placed = false
+              destroyer_placed = false #-- check for column collisions
               break
             else
               destroyer_placed = true
             end
           end
           if destroyer_placed
-            row.upto(row+1).each do | x |
+            row.upto(row+1).each do | x | #-- place destroyer in a column
               eval(str)[x, col] = 'd'
             end
           end
@@ -93,36 +92,36 @@ class Battleship
 
   def place_battleships
     ['@a', '@b'].each do | str |
-      #-- battleship positions
+      #-- randomize battleship positions
       battleship_placed = false
       while battleship_placed == false
         if rand(2) == 0 #-- row or column
           row = rand(5); col = rand(3)
           col.upto(col+2).each do | y |
             if eval(str)[row, y] != ' '
-              battleship_placed = false
+              battleship_placed = false #-- check for row collisions
               break
             else
               battleship_placed = true
             end
           end
           if battleship_placed
-            col.upto(col+2).each do | y |
+            col.upto(col+2).each do | y | #-- place battleship in row
               eval(str)[row, y] = 'b'
             end
           end
-        else #-- column
+        else #-- place in a column
           row = rand(3); col = rand(5)
           row.upto(row+2).each do | x |
             if eval(str)[x, col] != ' '
-              battleship_placed = false
+              battleship_placed = false #-- check for column collisions
               break
             else
               battleship_placed = true
             end
           end
           if battleship_placed
-            row.upto(row+2).each do | x |
+            row.upto(row+2).each do | x | #-- place battleship in column
               eval(str)[x, col] = 'b'
             end
           end
@@ -149,7 +148,7 @@ class Battleship
       end
       puts "  +---+---+---+---+---+"
       puts ""
-      
+
       turn = '@computer_selects' if str == '@a'
       turn = '@player_selects'   if str == '@b'
 
