@@ -3,7 +3,6 @@ class Array2Dimensions
 
   def initialize
     @store = [[]]
-
   end
 
   def [] (a,b)              #-- multideminsional arrays
@@ -19,7 +18,6 @@ class Array2Dimensions
     @store[a] = [] if @store[a] == nil
     @store[a][b] = x
   end
-
 end
 
 
@@ -140,45 +138,44 @@ class Battleship
 
 
 
-def draw_boards
+  def draw_boards
+    system "clear"
 
-  system "clear"
+    ['@a', '@b'].each do  | letter |
+      puts ""
+        if letter == '@a'
+          puts "Willy's Board"
+        else
+          puts "Computer's Board"
+        end
+      puts "    1   2   3   4   5"
+      puts "  +---+---+---+---+---+"
+      puts "1 | #{eval(letter)[0,0]} | #{eval(letter)[0,1]} | #{eval(letter)[0,2]} | #{eval(letter)[0,3]} | #{eval(letter)[0,4]} |"
+      puts "  +---+---+---+---+---+"
+      puts "2 | #{eval(letter)[1,0]} | #{eval(letter)[1,1]} | #{eval(letter)[1,2]} | #{eval(letter)[1,3]} | #{eval(letter)[1,4]} |"
+      puts "  +---+---+---+---+---+"
+      puts "3 | #{eval(letter)[2,0]} | #{eval(letter)[2,1]} | #{eval(letter)[2,2]} | #{eval(letter)[2,3]} | #{eval(letter)[2,4]} |"
+      puts "  +---+---+---+---+---+"
+      puts "4 | #{eval(letter)[3,0]} | #{eval(letter)[3,1]} | #{eval(letter)[3,2]} | #{eval(letter)[3,3]} | #{eval(letter)[3,4]} |"
+      puts "  +---+---+---+---+---+"
+      puts "5 | #{eval(letter)[4,0]} | #{eval(letter)[4,1]} | #{eval(letter)[4,2]} | #{eval(letter)[4,3]} | #{eval(letter)[4,4]} |"
+      puts "  +---+---+---+---+---+"
+      puts ""
+      turn = '@computer_selects' if letter == '@a'
+      turn = '@player_selects' if letter == '@b'
 
-  ['@a', '@b'].each do  | letter |
-    puts ""
-    if letter == '@a'
-      puts "Willy's Board"
-    else
-      puts "Computer's Board"
+      # #-- set ship statuses
+      destroyer_status =  'Alive'
+      cruiser_status =    'Alive'
+      battleship_status = 'Alive'
+      destroyer_status =   'Dead' if eval(turn).grep('d').size == 2
+      battleship_status = ' Dead' if eval(turn).grep('b').size == 3
+      cruiser_status =     'Dead' if eval(turn).grep('c').size == 1
+
+      puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}"
+
     end
-    puts "    1   2   3   4   5"
-    puts "  +---+---+---+---+---+"
-    puts "1 | #{eval(letter)[0,0]} | #{eval(letter)[0,1]} | #{eval(letter)[0,2]} | #{eval(letter)[0,3]} | #{eval(letter)[0,4]} |"
-    puts "  +---+---+---+---+---+"
-    puts "2 | #{eval(letter)[1,0]} | #{eval(letter)[1,1]} | #{eval(letter)[1,2]} | #{eval(letter)[1,3]} | #{eval(letter)[1,4]} |"
-    puts "  +---+---+---+---+---+"
-    puts "3 | #{eval(letter)[2,0]} | #{eval(letter)[2,1]} | #{eval(letter)[2,2]} | #{eval(letter)[2,3]} | #{eval(letter)[2,4]} |"
-    puts "  +---+---+---+---+---+"
-    puts "4 | #{eval(letter)[3,0]} | #{eval(letter)[3,1]} | #{eval(letter)[3,2]} | #{eval(letter)[3,3]} | #{eval(letter)[3,4]} |"
-    puts "  +---+---+---+---+---+"
-    puts "5 | #{eval(letter)[4,0]} | #{eval(letter)[4,1]} | #{eval(letter)[4,2]} | #{eval(letter)[4,3]} | #{eval(letter)[4,4]} |"
-    puts "  +---+---+---+---+---+"
-    puts ""
-    turn = '@computer_selects' if letter == '@a'
-    turn = '@player_selects' if letter == '@b'
-
-    # #-- set ship statuses
-    destroyer_status =  'Alive'
-    cruiser_status =    'Alive'
-    battleship_status = 'Alive'
-    destroyer_status =   'Dead' if eval(turn).grep('d').size == 2
-    battleship_status = ' Dead' if eval(turn).grep('b').size == 3
-    cruiser_status =     'Dead' if eval(turn).grep('c').size == 1
-
-    puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}"
-
   end
-end
 
   def evaluate_game
     #-- evaluate game
