@@ -143,16 +143,11 @@ class Battleship
         puts "Computer's Board"
       end
       puts "    1   2   3   4   5"
-      puts "  +---+---+---+---+---+"
-      puts "1 | #{eval(str)[0,0]} | #{eval(str)[0,1]} | #{eval(str)[0,2]} | #{eval(str)[0,3]} | #{eval(str)[0,4]} |"
-      puts "  +---+---+---+---+---+"
-      puts "2 | #{eval(str)[1,0]} | #{eval(str)[1,1]} | #{eval(str)[1,2]} | #{eval(str)[1,3]} | #{eval(str)[1,4]} |"
-      puts "  +---+---+---+---+---+"
-      puts "3 | #{eval(str)[2,0]} | #{eval(str)[2,1]} | #{eval(str)[2,2]} | #{eval(str)[2,3]} | #{eval(str)[2,4]} |"
-      puts "  +---+---+---+---+---+"
-      puts "4 | #{eval(str)[3,0]} | #{eval(str)[3,1]} | #{eval(str)[3,2]} | #{eval(str)[3,3]} | #{eval(str)[3,4]} |"
-      puts "  +---+---+---+---+---+"
-      puts "5 | #{eval(str)[4,0]} | #{eval(str)[4,1]} | #{eval(str)[4,2]} | #{eval(str)[4,3]} | #{eval(str)[4,4]} |"
+      col = 0
+      0.upto(4).each do |row|
+        puts "  +---+---+---+---+---+"
+        puts "#{row+1} | #{eval(str)[row,col]} | #{eval(str)[row,col+1]} | #{eval(str)[row,col+2]} | #{eval(str)[row,col+3]} | #{eval(str)[row,col+4]} |"
+      end
       puts "  +---+---+---+---+---+"
       puts ""
       turn = '@computer_selects' if str == '@a'
