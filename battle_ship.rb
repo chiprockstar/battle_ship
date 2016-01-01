@@ -4,7 +4,7 @@ class Array2Dimensions
     @store = [[]]
   end
 
-  def [] (a,b)              #-- multideminsional arrays
+  def [] (a,b)              #-- multidimensional arrays
     if @store[a] == nil ||
       @store[a][b] == nil
       return nil
@@ -41,7 +41,6 @@ class Battleship
       end
     end
   end
-
 
   def place_cruisers
     ['@a', '@b'].each do | str |
@@ -129,7 +128,6 @@ class Battleship
       end
     end
   end
-
 
   def draw_boards
     system "clear"
