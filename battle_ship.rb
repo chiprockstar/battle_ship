@@ -163,12 +163,12 @@ class Battleship
 
   def evaluate_game
     #-- evaluate game
-    if @player_selects.grep('b').size == 3 && @player_selects.grep('c').size == 1 && @player_selects.grep('d').size == 2
-      puts "Game Over - Willy Wins!"
-      exit
-    elsif @computer_selects.grep('b').size == 3 && @computer_selects.grep('c').size == 1 && @computer_selects.grep('d').size == 2
-      puts "Game Over - Computer Wins!"
-      exit
+    ['@player_selects', '@computer_selects'].each do | ships |
+      if eval(ships).grep('b').size == 3 && eval(ships).grep('c').size == 1 && eval(ships).grep('d').size == 2
+        puts "Game Over - Willy Wins!" if ships == '@player_selects'
+        puts "Game Over - Computer Wins!" if ships == '@computer_selects'
+        exit
+      end
     end
   end
 
