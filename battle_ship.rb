@@ -1,3 +1,5 @@
+require 'colorize'
+
 class Array2Dimensions
 
   def initialize
@@ -150,12 +152,12 @@ class Battleship
       turn = '@player_selects'   if str == '@b'
 
       #-- set ship statuses
-      destroyer_status =  'Alive'
-      cruiser_status =    'Alive'
-      battleship_status = 'Alive'
-      destroyer_status =   'Dead' if eval(turn).grep('d').size == 2
-      battleship_status =  'Dead' if eval(turn).grep('b').size == 3
-      cruiser_status =     'Dead' if eval(turn).grep('c').size == 1
+      destroyer_status =  'Alive'.colorize(:green)
+      cruiser_status =    'Alive'.colorize(:green)
+      battleship_status = 'Alive'.colorize(:green)
+      destroyer_status =   'Dead'.colorize(:red) if eval(turn).grep('d').size == 2
+      battleship_status =  'Dead'.colorize(:red) if eval(turn).grep('b').size == 3
+      cruiser_status =     'Dead'.colorize(:red) if eval(turn).grep('c').size == 1
 
       puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}"
     end
