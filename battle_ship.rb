@@ -181,9 +181,9 @@ class Battleship
     @player_selects << @b[split_value.last - 1, split_value.first - 1]
 
     if @b[split_value.last - 1, split_value.first - 1] == ' '
-      @b[split_value.last - 1, split_value.first - 1] = '/'
+       @b[split_value.last - 1, split_value.first - 1] = '/'
     else
-      @b[split_value.last - 1, split_value.first - 1] = 'x'
+       @b[split_value.last - 1, split_value.first - 1] = 'x'
     end
   end
 
