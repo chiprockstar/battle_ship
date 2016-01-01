@@ -154,7 +154,7 @@ class Battleship
       cruiser_status =    'Alive'
       battleship_status = 'Alive'
       destroyer_status =   'Dead' if eval(turn).grep('d').size == 2
-      battleship_status = ' Dead' if eval(turn).grep('b').size == 3
+      battleship_status =  'Dead' if eval(turn).grep('b').size == 3
       cruiser_status =     'Dead' if eval(turn).grep('c').size == 1
 
       puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}"
@@ -178,12 +178,13 @@ class Battleship
     coord = gets.chomp
     exit if coord == 'q'
     split_value = coord.split(",").map { |x| x.to_i }
-    @player_selects << @b[split_value.last - 1, split_value.first - 1]
+    player_choice = '@b[split_value.last - 1, split_value.first - 1]'
+    @player_selects << eval(player_choice)
 
-    if @b[split_value.last - 1, split_value.first - 1] == ' '
-       @b[split_value.last - 1, split_value.first - 1] = '/'
+    if eval(player_choice) == ' '
+      @b[split_value.last - 1, split_value.first - 1] = '/'
     else
-       @b[split_value.last - 1, split_value.first - 1] = 'x'
+      @b[split_value.last - 1, split_value.first - 1] = 'x'
     end
   end
 
