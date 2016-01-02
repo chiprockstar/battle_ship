@@ -134,22 +134,24 @@ class Battleship
   def draw_boards
     system "clear"
     ['@a', '@b'].each do  | str |
+
       if str == '@a'
         puts "Willy's Board"
       else
         puts "Computer's Board"
       end
-      puts "    1   2   3   4   5"
-      col = 0
-      0.upto(4).each do |row|
-        puts "  +---+---+---+---+---+"
-        puts "#{row+1} | #{eval(str)[row,col]} | #{eval(str)[row,col+1]} | #{eval(str)[row,col+2]} | #{eval(str)[row,col+3]} | #{eval(str)[row,col+4]} |"
-      end
-      puts "  +---+---+---+---+---+"
-      puts ""
 
       turn = '@computer_selects' if str == '@a'
       turn = '@player_selects'   if str == '@b'
+      puts "    1   2   3   4   5"
+
+      0.upto(4).each do |row|
+        puts  "  +---+---+---+---+---+"
+        puts  "#{row+1} | #{eval(str)[row,0]} | #{eval(str)[row,1]} | #{eval(str)[row,2]} | #{eval(str)[row,3]} | #{eval(str)[row,4]} |"
+      end
+
+      puts    "  +---+---+---+---+---+"
+      puts    ""
 
       #-- set ship statuses
       destroyer_status =  'Alive'.colorize(:green)
@@ -158,7 +160,6 @@ class Battleship
       destroyer_status =   'Dead'.colorize(:red) if eval(turn).grep('d').size == 2
       battleship_status =  'Dead'.colorize(:red) if eval(turn).grep('b').size == 3
       cruiser_status =     'Dead'.colorize(:red) if eval(turn).grep('c').size == 1
-
       puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}"
     end
   end
