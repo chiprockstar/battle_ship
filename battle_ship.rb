@@ -133,7 +133,11 @@ class Battleship
 
   def colorize(position)
     color = :white
-    color = :red if position == 'x'
+    color = :magenta if position == 'c'
+    color = :yellow  if position == 'd'
+    color = :green   if position == 'b'
+    color = :blue    if position == '/'
+    color = :red     if position == 'x'
     " #{position.colorize(color)}"
   end
 
@@ -175,7 +179,7 @@ class Battleship
     end
   end
 
-  def is_sunken_ships?(ship)
+  def game_over?(ship)
     if eval(ship).grep('b').size == 3 &&
        eval(ship).grep('c').size == 1 &&
        eval(ship).grep('d').size == 2
@@ -188,7 +192,7 @@ class Battleship
   def evaluate_game
     #-- evaluate game
     ['@player_shots', '@computer_shots'].each do | ships |
-      if is_sunken_ships?(ships)
+      if game_over?(ships)
         puts ""
         puts "Game Over - Willy Wins!"    if ships == '@player_shots'
         puts "Game Over - Computer Wins!" if ships == '@computer_shots'
