@@ -192,8 +192,8 @@ class Battleship
     ['@player_shots', '@computer_shots'].each do | player |
       if game_over?(player)
         puts ""
-        puts "Game Over - Willy Wins!"    if player == '@player_shots'
-        puts "Game Over - Computer Wins!" if player == '@computer_shots'
+        puts "Game Over - Willy Wins!".colorize(:green)    if player == '@player_shots'
+        puts "Game Over - Computer Wins!".colorize(:green) if player == '@computer_shots'
         exit
       end
     end
