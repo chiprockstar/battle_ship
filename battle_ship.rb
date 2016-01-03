@@ -175,10 +175,20 @@ class Battleship
     end
   end
 
+  def is_sunken_ships?(ship)
+    if eval(ship).grep('b').size == 3 &&
+       eval(ship).grep('c').size == 1 &&
+       eval(ship).grep('d').size == 2
+       return true
+    else
+       return false
+     end
+  end
+
   def evaluate_game
     #-- evaluate game
     ['@player_shots', '@computer_shots'].each do | ships |
-      if eval(ships).grep('b').size == 3 && eval(ships).grep('c').size == 1 && eval(ships).grep('d').size == 2
+      if is_sunken_ships?(ships)
         puts ""
         puts "Game Over - Willy Wins!"    if ships == '@player_shots'
         puts "Game Over - Computer Wins!" if ships == '@computer_shots'
@@ -195,13 +205,14 @@ class Battleship
     split_param = coord.split(",").map { |x| x.to_i }
     row = split_param.last - 1
     col = split_param.first - 1
-    @player_shots << @b[row, col]
+    position = lambda { @b[row, col] }
 
-    ps = Proc.new { |char| @b[row, col] = char }
-    if @b[row, col] == ' '
-      ps.call('/')
+    set_position = lambda { |char| @b[row, col] = char }
+    @player_shots << position.call
+    if position.call == ' '
+      set_position.call('/')
     else
-      ps.call('x')
+      set_position.call('x')
     end
   end
 
@@ -210,14 +221,15 @@ class Battleship
     process = true
     while process
       row = rand(5); col = rand(5)
-      if !@a[row, col].include?("x") && !@a[row, col].include?("/")
-        @computer_shots << @a[row, col]
+      position = lambda { @a[row, col] }
+      if !position.call.include?("x") && !position.call.include?("/")
+        set_position = lambda { |char| @a[row, col] = char }
 
-        ps = Proc.new { |char| @a[row, col] = char }
-        if @a[row, col] == ' '
-          ps.call('/')
-        elsif @a[row, col].scan(/\w/)
-          ps.call('x')
+        @computer_shots << position.call
+        if position.call == ' '
+          set_position.call('/')
+        elsif position.call.scan(/\w/)
+          set_position.call('x')
         end
         process = false
       end
