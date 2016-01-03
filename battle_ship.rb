@@ -150,13 +150,13 @@ class Battleship
       puts "    1   2   3   4   5"
 
       0.upto(4).each do |row|
-        print  "  +---+---+---+---+---+\n"
-        print  "#{row+1} |"
-        print  "#{colorize(eval(str)[row,0])} |"
-        print  "#{colorize(eval(str)[row,1])} |"
-        print  "#{colorize(eval(str)[row,2])} |"
-        print  "#{colorize(eval(str)[row,3])} |"
-        print  "#{colorize(eval(str)[row,4])} |\n"
+        print "  +---+---+---+---+---+\n"
+        print "#{row+1} |"
+        print "#{colorize(eval(str)[row,0])} |"
+        print "#{colorize(eval(str)[row,1])} |"
+        print "#{colorize(eval(str)[row,2])} |"
+        print "#{colorize(eval(str)[row,3])} |"
+        print "#{colorize(eval(str)[row,4])} |\n"
       end
 
       puts    "  +---+---+---+---+---+"
@@ -171,7 +171,7 @@ class Battleship
       destroyer_status =   'Dead'.colorize(:red) if eval(turn).grep('d').size == 2
       battleship_status =  'Dead'.colorize(:red) if eval(turn).grep('b').size == 3
       cruiser_status =     'Dead'.colorize(:red) if eval(turn).grep('c').size == 1
-      puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}"
+      puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}\n"
     end
   end
 
@@ -179,6 +179,7 @@ class Battleship
     #-- evaluate game
     ['@player_shots', '@computer_shots'].each do | ships |
       if eval(ships).grep('b').size == 3 && eval(ships).grep('c').size == 1 && eval(ships).grep('d').size == 2
+        puts ""
         puts "Game Over - Willy Wins!"    if ships == '@player_shots'
         puts "Game Over - Computer Wins!" if ships == '@computer_shots'
         exit
@@ -192,13 +193,15 @@ class Battleship
     coord = gets.chomp
     exit if coord == 'q'
     split_param = coord.split(",").map { |x| x.to_i }
-    player_shot = '@b[split_param.last - 1, split_param.first - 1]'
-    @player_shots << eval(player_shot)
+    row = split_param.last - 1
+    col = split_param.first - 1
+    @player_shots << @b[row, col]
 
-    if eval(player_shot) == ' '
-      @b[split_param.last - 1, split_param.first - 1] = '/'
+    ps = Proc.new { |char| @b[row, col] = char }
+    if @b[row, col] == ' '
+      ps.call('/')
     else
-      @b[split_param.last - 1, split_param.first - 1] = 'x'
+      ps.call('x')
     end
   end
 
@@ -207,14 +210,15 @@ class Battleship
     process = true
     while process
       row = rand(5); col = rand(5)
-      if !@computer[row, col].include?("x") && !@computer[row, col].include?("/")
+      if !@a[row, col].include?("x") && !@a[row, col].include?("/")
         @computer_shots << @a[row, col]
+
+        ps = Proc.new { |char| @a[row, col] = char }
         if @a[row, col] == ' '
-          @a[row, col]  = '/'
+          ps.call('/')
         elsif @a[row, col].scan(/\w/)
-          @a[row, col] = 'x'
+          ps.call('x')
         end
-        @computer[row, col] = @a[row, col]
         process = false
       end
     end
