@@ -177,10 +177,10 @@ class Battleship
     end
   end
 
-  def game_over?(ship)
-    if eval(ship).grep('b').size == 3 &&
-       eval(ship).grep('c').size == 1 &&
-       eval(ship).grep('d').size == 2
+  def game_over?(player)
+    if eval(player).grep('b').size == 3 &&
+       eval(player).grep('c').size == 1 &&
+       eval(player).grep('d').size == 2
        return true
     else
        return false
@@ -189,11 +189,11 @@ class Battleship
 
   def evaluate_game
     #-- evaluate game
-    ['@player_shots', '@computer_shots'].each do | ships |
-      if game_over?(ships)
+    ['@player_shots', '@computer_shots'].each do | player |
+      if game_over?(player)
         puts ""
-        puts "Game Over - Willy Wins!"    if ships == '@player_shots'
-        puts "Game Over - Computer Wins!" if ships == '@computer_shots'
+        puts "Game Over - Willy Wins!"    if player == '@player_shots'
+        puts "Game Over - Computer Wins!" if player == '@computer_shots'
         exit
       end
     end
