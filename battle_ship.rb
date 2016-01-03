@@ -29,8 +29,8 @@ class Battleship
     @a = Array2Dimensions.new
     @b = Array2Dimensions.new
     @computer = Array2Dimensions.new
-    @computer_selects = Array.new
-    @player_selects = Array.new
+    @computer_shots = Array.new
+    @player_shots = Array.new
   end
 
   def init_data_struct
@@ -141,8 +141,8 @@ class Battleship
         puts "Computer's Board"
       end
 
-      turn = '@computer_selects' if str == '@a'
-      turn = '@player_selects'   if str == '@b'
+      turn = '@computer_shots' if str == '@a'
+      turn = '@player_shots'   if str == '@b'
       puts "    1   2   3   4   5"
 
       0.upto(4).each do |row|
@@ -166,10 +166,10 @@ class Battleship
 
   def evaluate_game
     #-- evaluate game
-    ['@player_selects', '@computer_selects'].each do | ships |
+    ['@player_shots', '@computer_shots'].each do | ships |
       if eval(ships).grep('b').size == 3 && eval(ships).grep('c').size == 1 && eval(ships).grep('d').size == 2
-        puts "Game Over - Willy Wins!"    if ships == '@player_selects'
-        puts "Game Over - Computer Wins!" if ships == '@computer_selects'
+        puts "Game Over - Willy Wins!"    if ships == '@player_shots'
+        puts "Game Over - Computer Wins!" if ships == '@computer_shots'
         exit
       end
     end
@@ -180,14 +180,14 @@ class Battleship
     puts "Select a square such as (3,5) to open fire. Enter q to quit."
     coord = gets.chomp
     exit if coord == 'q'
-    split_value = coord.split(",").map { |x| x.to_i }
-    player_choice = '@b[split_value.last - 1, split_value.first - 1]'
-    @player_selects << eval(player_choice)
+    split_param = coord.split(",").map { |x| x.to_i }
+    player_shot = '@b[split_param.last - 1, split_param.first - 1]'
+    @player_shots << eval(player_shot)
 
-    if eval(player_choice) == ' '
-      @b[split_value.last - 1, split_value.first - 1] = '/'
+    if eval(player_shot) == ' '
+      @b[split_param.last - 1, split_param.first - 1] = '/'
     else
-      @b[split_value.last - 1, split_value.first - 1] = 'x'
+      @b[split_param.last - 1, split_param.first - 1] = 'x'
     end
   end
 
@@ -197,7 +197,7 @@ class Battleship
     while process
       row = rand(5); col = rand(5)
       if !@computer[row, col].include?("x") && !@computer[row, col].include?("/")
-        @computer_selects << @a[row, col]
+        @computer_shots << @a[row, col]
         if @a[row, col] == ' '
           @a[row, col]  = '/'
         elsif @a[row, col].scan(/\w/)
