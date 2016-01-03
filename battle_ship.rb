@@ -139,6 +139,19 @@ class Battleship
     " #{position.colorize(color)}"
   end
 
+  def print_game_status(str)
+    turn = '@computer_shots' if str == '@a'
+    turn = '@player_shots'   if str == '@b'
+    #-- set ship statuses
+    destroyer_status =  'Alive'.colorize(:green)
+    cruiser_status =    'Alive'.colorize(:green)
+    battleship_status = 'Alive'.colorize(:green)
+    destroyer_status =   'Dead'.colorize(:red) if eval(turn).grep('d').size == 2
+    battleship_status =  'Dead'.colorize(:red) if eval(turn).grep('b').size == 3
+    cruiser_status =     'Dead'.colorize(:red) if eval(turn).grep('c').size == 1
+    puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}\n"
+  end
+
   def draw_boards
     system "clear"
     ['@a', '@b'].each do  | str |
@@ -163,17 +176,7 @@ class Battleship
 
       puts    "  +---+---+---+---+---+"
       puts    ""
-
-      turn = '@computer_shots' if str == '@a'
-      turn = '@player_shots'   if str == '@b'
-      #-- set ship statuses
-      destroyer_status =  'Alive'.colorize(:green)
-      cruiser_status =    'Alive'.colorize(:green)
-      battleship_status = 'Alive'.colorize(:green)
-      destroyer_status =   'Dead'.colorize(:red) if eval(turn).grep('d').size == 2
-      battleship_status =  'Dead'.colorize(:red) if eval(turn).grep('b').size == 3
-      cruiser_status =     'Dead'.colorize(:red) if eval(turn).grep('c').size == 1
-      puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}\n"
+      print_game_status(str)
     end
   end
 
