@@ -28,7 +28,6 @@ class Battleship
     #-- initialize arrays
     @a = Array2Dimensions.new
     @b = Array2Dimensions.new
-    @computer = Array2Dimensions.new
     @computer_shots = Array.new
     @player_shots = Array.new
   end
@@ -39,7 +38,6 @@ class Battleship
       0.upto(4).each do | y |
         @a[x, y] = ' '
         @b[x, y] = ' '
-        @computer[x, y] = ' '
       end
     end
   end
