@@ -131,6 +131,12 @@ class Battleship
     end
   end
 
+  def colorize(position)
+    color = :white
+    color = :red if position == 'x'
+    " #{position.colorize(color)}"
+  end
+
   def draw_boards
     system "clear"
     ['@a', '@b'].each do  | str |
@@ -141,18 +147,23 @@ class Battleship
         puts "Computer's Board"
       end
 
-      turn = '@computer_shots' if str == '@a'
-      turn = '@player_shots'   if str == '@b'
       puts "    1   2   3   4   5"
 
       0.upto(4).each do |row|
-        puts  "  +---+---+---+---+---+"
-        puts  "#{row+1} | #{eval(str)[row,0]} | #{eval(str)[row,1]} | #{eval(str)[row,2]} | #{eval(str)[row,3]} | #{eval(str)[row,4]} |"
+        print  "  +---+---+---+---+---+\n"
+        print  "#{row+1} |"
+        print  "#{colorize(eval(str)[row,0])} |"
+        print  "#{colorize(eval(str)[row,1])} |"
+        print  "#{colorize(eval(str)[row,2])} |"
+        print  "#{colorize(eval(str)[row,3])} |"
+        print  "#{colorize(eval(str)[row,4])} |\n"
       end
 
       puts    "  +---+---+---+---+---+"
       puts    ""
 
+      turn = '@computer_shots' if str == '@a'
+      turn = '@player_shots'   if str == '@b'
       #-- set ship statuses
       destroyer_status =  'Alive'.colorize(:green)
       cruiser_status =    'Alive'.colorize(:green)
