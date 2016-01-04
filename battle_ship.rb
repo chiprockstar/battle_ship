@@ -52,38 +52,13 @@ class Battleship
   def place_destroyers
     ['@a', '@b'].each do | str |
       #-- randomize destroyer positions
-      destroyer_placed = false
-      while destroyer_placed == false
+      ship_placed = false
+      while ship_placed == false
         if rand(2) == 0 #-- row or column
-          row = rand(5); col = rand(4)
-          col.upto(col+1).each do | y |
-            if eval(str)[row, y] != ' '
-              destroyer_placed = false #-- check for row collisions
-              break
-            else
-              destroyer_placed = true
-            end
-          end
-          if destroyer_placed
-            col.upto(col+1).each do | y | #-- place destroyer in a row
-              eval(str)[row, y] = 'd'
-            end
-          end
-        else #-- column
-          row = rand(4); col = rand(5)
-          row.upto(row+1).each do | x |
-            if eval(str)[x, col] != ' '
-              destroyer_placed = false #-- check for column collisions
-              break
-            else
-              destroyer_placed = true
-            end
-          end
-          if destroyer_placed
-            row.upto(row+1).each do | x | #-- place destroyer in a column
-              eval(str)[x, col] = 'd'
-            end
-          end
+          #-- place in row
+          ship_placed = set_position_row('destroyer', str)
+        else #-- place in column
+          ship_placed = set_position_col('destroyer', str)
         end
       end
     end
@@ -92,91 +67,15 @@ class Battleship
   def place_battleships
     ['@a', '@b'].each do | str |
       #-- randomize battleship positions
-      battleship_placed = false
-      while battleship_placed == false
+      ship_placed = false
+      while ship_placed == false
         if rand(2) == 0 #-- row or column
-          row = rand(5); col = rand(3)
-          col.upto(col+2).each do | y |
-            if eval(str)[row, y] != ' '
-              battleship_placed = false #-- check for row collisions
-              break
-            else
-              battleship_placed = true
-            end
-          end
-          if battleship_placed
-            col.upto(col+2).each do | y | #-- place battleship in row
-              eval(str)[row, y] = 'b'
-            end
-          end
+          #-- place in a row
+          ship_placed = set_position_row('battleship', str)
         else #-- place in a column
-          row = rand(3); col = rand(5)
-          row.upto(row+2).each do | x |
-            if eval(str)[x, col] != ' '
-              battleship_placed = false #-- check for column collisions
-              break
-            else
-              battleship_placed = true
-            end
-          end
-          if battleship_placed
-            row.upto(row+2).each do | x | #-- place battleship in column
-              eval(str)[x, col] = 'b'
-            end
-          end
+          ship_placed = set_position_col('battleship', str)
         end
       end
-    end
-  end
-
-  def colorize(position)
-    color = :white
-    color = :magenta if position == 'c'
-    color = :yellow  if position == 'd'
-    color = :green   if position == 'b'
-    color = :blue    if position == '/'
-    color = :red     if position == 'x'
-    " #{position.colorize(color)}"
-  end
-
-  def print_game_status(str)
-    turn = '@computer_shots' if str == '@a'
-    turn = '@player_shots'   if str == '@b'
-    #-- set ship statuses
-    destroyer_status =  'Alive'.colorize(:green)
-    cruiser_status =    'Alive'.colorize(:green)
-    battleship_status = 'Alive'.colorize(:green)
-    destroyer_status =   'Dead'.colorize(:red) if eval(turn).grep('d').size == 2
-    battleship_status =  'Dead'.colorize(:red) if eval(turn).grep('b').size == 3
-    cruiser_status =     'Dead'.colorize(:red) if eval(turn).grep('c').size == 1
-    puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}\n"
-  end
-
-  def draw_boards
-    system "clear"
-    ['@a', '@b'].each do  | str |
-
-      if str == '@a'
-        puts "Willy's Board"
-      else
-        puts "Computer's Board"
-      end
-
-      puts "    1   2   3   4   5"
-
-      0.upto(4).each do |row|
-        print "  +---+---+---+---+---+\n"
-        print "#{row+1} |"
-        print "#{colorize(eval(str)[row,0])} |"
-        print "#{colorize(eval(str)[row,1])} |"
-        print "#{colorize(eval(str)[row,2])} |"
-        print "#{colorize(eval(str)[row,3])} |"
-        print "#{colorize(eval(str)[row,4])} |\n"
-      end
-
-      puts    "  +---+---+---+---+---+"
-      puts    ""
-      print_game_status(str)
     end
   end
 
@@ -211,7 +110,6 @@ class Battleship
     row = split_param.last - 1
     col = split_param.first - 1
     position = lambda { @b[row, col] }
-
     set_position = lambda { |char| @b[row, col] = char }
     @player_shots << position.call
     if position.call == ' '
@@ -229,7 +127,6 @@ class Battleship
       position = lambda { @a[row, col] }
       if !position.call.include?("x") && !position.call.include?("/")
         set_position = lambda { |char| @a[row, col] = char }
-
         @computer_shots << position.call
         if position.call == ' '
           set_position.call('/')
@@ -239,6 +136,114 @@ class Battleship
         process = false
       end
     end
+  end
+
+  def colorize(position)
+    color = :white
+    color = :magenta if position == 'c'
+    color = :yellow  if position == 'd'
+    color = :green   if position == 'b'
+    color = :blue    if position == '/'
+    color = :red     if position == 'x'
+    " #{position.colorize(color)}"
+  end
+
+  def print_game_status(str)
+    turn = '@computer_shots' if str == '@a'
+    turn = '@player_shots'   if str == '@b'
+    #-- set ship statuses
+    destroyer_status  =  'Alive'.colorize(:green)
+    cruiser_status    =  'Alive'.colorize(:green)
+    battleship_status =  'Alive'.colorize(:green)
+    destroyer_status  =  'Dead'.colorize(:red) if eval(turn).grep('d').size == 2
+    battleship_status =  'Dead'.colorize(:red) if eval(turn).grep('b').size == 3
+    cruiser_status    =  'Dead'.colorize(:red) if eval(turn).grep('c').size == 1
+    puts "Destroyer: #{destroyer_status}  Cruiser: #{cruiser_status}  Battleship: #{battleship_status}\n"
+  end
+
+  def draw_boards
+    system "clear"
+    ['@a', '@b'].each do  | str |
+      if str == '@a'
+        puts "Willy's Board"
+      else
+        puts "Computer's Board"
+      end
+      puts "    1   2   3   4   5"
+      0.upto(4).each do |row|
+        print "  +---+---+---+---+---+\n"
+        print "#{row+1} |"
+        print "#{colorize(eval(str)[row,0])} |"
+        print "#{colorize(eval(str)[row,1])} |"
+        print "#{colorize(eval(str)[row,2])} |"
+        print "#{colorize(eval(str)[row,3])} |"
+        print "#{colorize(eval(str)[row,4])} |\n"
+      end
+      puts    "  +---+---+---+---+---+"
+      puts    ""
+      print_game_status(str)
+    end
+  end
+
+  def find_clear_location(str, row, col)
+    if eval(str)[row, col] != ' '
+      ship_placed = false #-- check for row or column collisions
+    else
+      ship_placed = true
+    end
+    ship_placed
+  end
+
+  def set_position_row(ship_type, str)
+    ship_placed = false
+    if ship_type == 'destroyer'
+      row = rand(5); col = rand(4)
+      col.upto(col+1).each do  | y |
+        ship_placed = find_clear_location(str, row, y)
+        if !ship_placed
+          break
+        end
+      end
+      #-- place destroyer in a row
+      col.upto(col+1).each { | y | eval(str)[row, y] = 'd' } if ship_placed
+    else
+      row = rand(5); col = rand(3)
+      col.upto(col+2).each do  | y |
+        ship_placed = find_clear_location(str, row, y)
+        if !ship_placed
+          break
+        end
+      end
+      #-- place battleship in row
+      col.upto(col+2).each { | y | eval(str)[row, y] = 'b' } if ship_placed
+    end
+    ship_placed
+  end
+
+  def set_position_col(ship_type, str)
+    ship_placed = false
+    if ship_type == 'destroyer'
+      row = rand(5); col = rand(4)
+      row.upto(row+1).each do  | x |
+        ship_placed = find_clear_location(str, x, col)
+        if !ship_placed
+          break
+        end
+      end
+      #-- place destroyer in a column
+      row.upto(row+1).each { | x |  eval(str)[x, col] = 'd' } if ship_placed
+    else
+      row = rand(5); col = rand(3)
+      row.upto(row+2).each do  | x |
+        ship_placed = find_clear_location(str, x, col)
+        if !ship_placed
+          break
+        end
+      end
+      #-- place battleship in a column
+      row.upto(row+2).each { | x | eval(str)[x, col] = 'b' } if ship_placed
+    end
+    ship_placed
   end
 end
 
