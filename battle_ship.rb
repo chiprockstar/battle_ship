@@ -194,46 +194,69 @@ class Battleship
     ship_placed
   end
 
-  def set_position_row(ship_type, str)
+  def destroyer_to_row(str)
     ship_placed = false
+    row = rand(5); col = rand(4)
+    col.upto(col+1).each do  | y |
+      ship_placed = find_clear_location(str, row, y)
+      if !ship_placed; break; end
+    end
+    #-- place destroyer in a row
+    col.upto(col+1).each { | y | eval(str)[row, y] = 'd' } if ship_placed
+    ship_placed
+  end
+
+  def battleship_to_row(str)
+    ship_placed = false
+    row = rand(5); col = rand(3)
+    col.upto(col+2).each do  | y |
+      ship_placed = find_clear_location(str, row, y)
+      if !ship_placed; break; end
+    end
+    #-- place battleship in row
+    col.upto(col+2).each { | y | eval(str)[row, y] = 'b' } if ship_placed
+    ship_placed
+  end
+
+  def set_position_row(ship_type, str)
+    #ship_placed = false
     if ship_type == 'destroyer'
-      row = rand(5); col = rand(4)
-      col.upto(col+1).each do  | y |
-        ship_placed = find_clear_location(str, row, y)
-        if !ship_placed; break; end
-      end
-      #-- place destroyer in a row
-      col.upto(col+1).each { | y | eval(str)[row, y] = 'd' } if ship_placed
+      ship_placed = destroyer_to_row(str)
     else
-      row = rand(5); col = rand(3)
-      col.upto(col+2).each do  | y |
-        ship_placed = find_clear_location(str, row, y)
-        if !ship_placed; break; end
-      end
-      #-- place battleship in row
-      col.upto(col+2).each { | y | eval(str)[row, y] = 'b' } if ship_placed
+      ship_placed = battleship_to_row(str)
     end
     ship_placed
   end
 
-  def set_position_col(ship_type, str)
+  def destroyer_to_col(str)
     ship_placed = false
+    row = rand(5); col = rand(4)
+    row.upto(row+1).each do  | x |
+      ship_placed = find_clear_location(str, x, col)
+      if !ship_placed; break; end
+    end
+    #-- place destroyer in a column
+    row.upto(row+1).each { | x |  eval(str)[x, col] = 'd' } if ship_placed
+    ship_placed
+  end
+
+  def battleship_to_col(str)
+    ship_placed = false
+    row = rand(5); col = rand(3)
+    row.upto(row+2).each do  | x |
+      ship_placed = find_clear_location(str, x, col)
+      if !ship_placed; break; end
+    end
+    #-- place battleship in a column
+    row.upto(row+2).each { | x | eval(str)[x, col] = 'b' } if ship_placed
+    ship_placed
+  end
+
+  def set_position_col(ship_type, str)
     if ship_type == 'destroyer'
-      row = rand(5); col = rand(4)
-      row.upto(row+1).each do  | x |
-        ship_placed = find_clear_location(str, x, col)
-        if !ship_placed; break; end
-      end
-      #-- place destroyer in a column
-      row.upto(row+1).each { | x |  eval(str)[x, col] = 'd' } if ship_placed
+      ship_placed = destroyer_to_col(str)
     else
-      row = rand(5); col = rand(3)
-      row.upto(row+2).each do  | x |
-        ship_placed = find_clear_location(str, x, col)
-        if !ship_placed; break; end
-      end
-      #-- place battleship in a column
-      row.upto(row+2).each { | x | eval(str)[x, col] = 'b' } if ship_placed
+      ship_placed = battleship_to_col(str)
     end
     ship_placed
   end
